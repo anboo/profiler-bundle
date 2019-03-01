@@ -1,0 +1,16 @@
+{
+  "name": "anboo/profiler-bundle",
+  "description": "Bundle for usage anboo/profiler",
+  "keywords": ["settings"],
+  "type" : "library",
+  "license": "proprietary",
+  "authors" : [{
+    "name" : "Danil Andreev",
+    "email" : "rusdteam@gmail.com"
+  }],
+  "autoload": {
+    "psr-4": {
+      "Anboo\\Profiler\\Bundle\\": "src/"
+    }
+  }
+}
