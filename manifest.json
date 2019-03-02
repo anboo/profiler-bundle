@@ -1,0 +1,5 @@
+{
+  "bundles": {
+    "Anboo\\Profiler\\Bundle\\AnbooProfilerBundle": ["all"]
+  }
+}
