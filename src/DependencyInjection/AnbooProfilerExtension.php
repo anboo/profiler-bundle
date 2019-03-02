@@ -18,6 +18,9 @@ class AnbooProfilerExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $container->setParameter('anboo_profiler.profile_command', $configs['profile_command']);
+        $container->setParameter('anboo_profiler.profile_controller', $configs['profile_controller']);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
