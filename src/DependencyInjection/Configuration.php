@@ -9,6 +9,7 @@
 namespace Anboo\Profiler\Bundle\DependencyInjection;
 
 
+use Anboo\Profiler\Transport\AsyncCurlBatchTransport;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -21,8 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('profile_commands')->isRequired()->defaultValue(true)->end()
-                ->booleanNode('profile_controllers')->isRequired()->defaultValue(true)->end()
+                ->scalarNode('host')->isRequired()->defaultValue('127.0.0.1')->end()
+                ->integerNode('port')->isRequired()->defaultValue(25613)->end()
+                ->scalarNode('transport_handler')->isRequired()->defaultValue(AsyncCurlBatchTransport::class)->end()
+                ->booleanNode('profile_command')->isRequired()->defaultValue(true)->end()
+                ->booleanNode('profile_controller')->isRequired()->defaultValue(true)->end()
             ->end()
         ;
 

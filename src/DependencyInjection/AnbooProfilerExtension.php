@@ -20,6 +20,9 @@ class AnbooProfilerExtension extends Extension
     {
         $container->setParameter('anboo_profiler.profile_command', $configs['profile_command']);
         $container->setParameter('anboo_profiler.profile_controller', $configs['profile_controller']);
+        $container->setParameter('anboo_profiler.host', $configs['host']);
+        $container->setParameter('anboo_profiler.port', $configs['port']);
+        $container->setParameter('anboo_profiler.transport_handler', $configs['transport_handler']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
