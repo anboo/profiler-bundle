@@ -11,3 +11,8 @@ services:
     bind:
       $ignoreCommandsRegex: '%anboo_profiler.ignore_commands%'
     tags: ['kernel.event_subscriber']
+
+  Anboo\Profiler\Bundle\EventSubscriber\ControllerProfileSubscriber:
+    bind:
+      $ignoreRoutesRegex: '%anboo_profiler.ignore_routes%'
+    tags: ['kernel.event_subscriber']

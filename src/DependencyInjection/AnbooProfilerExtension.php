@@ -27,6 +27,7 @@ class AnbooProfilerExtension extends Extension
         $container->setParameter('anboo_profiler.port', $config['port']);
         $container->setParameter('anboo_profiler.transport_handler', $config['transport_handler']);
         $container->setParameter('anboo_profiler.ignore_commands', $config['ignore_commands']);
+        $container->setParameter('anboo_profiler.ignore_routes', $config['ignore_routes']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

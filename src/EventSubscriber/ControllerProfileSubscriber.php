@@ -23,12 +23,19 @@ class ControllerProfileSubscriber implements EventSubscriberInterface
     private $logger;
 
     /**
+     * @var string[]
+     */
+    private $ignoreRoutesRegex;
+
+    /**
      * ControllerProfileSubscriber constructor.
      * @param LoggerInterface $logger
+     * @param string[] $ignoreRoutesRegex
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, array $ignoreRoutesRegex)
     {
         $this->logger = $logger;
+        $this->ignoreRoutesRegex = $ignoreRoutesRegex;
     }
 
     /**
@@ -47,7 +54,10 @@ class ControllerProfileSubscriber implements EventSubscriberInterface
      */
     public function onRequest(GetResponseEvent $event)
     {
-        $name = $event->getRequest()->getUri();
+        $name = $event->getRequest()->getRequestUri();
+        if (!$this->isRouteSupported($name)) {
+            return;
+        }
 
         $this->logger->debug(sprintf('Start span %s', $name));
 
@@ -59,11 +69,40 @@ class ControllerProfileSubscriber implements EventSubscriberInterface
      */
     public function onTerminate(PostResponseEvent $event)
     {
-        $name = $event->getRequest()->getUri();
+        $name = $event->getRequest()->getRequestUri();
+        if (!$this->isRouteSupported($name)) {
+            return;
+        }
 
         $this->logger->debug(sprintf('End and flush span %s', $name));
 
         Prof::end($name);
         Prof::flush();
+    }
+
+    /**
+     * @param string $route
+     * @return bool
+     */
+    private function isRouteSupported(string $route)
+    {
+        foreach ($this->ignoreRoutesRegex as $ignoreRoutesRegex) {
+            $first = $ignoreRoutesRegex[0];
+            $last = $ignoreRoutesRegex[strlen($ignoreRoutesRegex) - 1];
+
+            if ($first !== '/') {
+                $ignoreRoutesRegex = '/'.$ignoreRoutesRegex;
+            }
+
+            if ($last !== '/') {
+                $ignoreRoutesRegex = $ignoreRoutesRegex.'/';
+            }
+
+            if (preg_match($ignoreRoutesRegex, $route)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

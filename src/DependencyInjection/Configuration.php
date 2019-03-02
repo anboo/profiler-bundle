@@ -30,6 +30,9 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('ignore_commands')
                     ->scalarPrototype()->end()
                 ->end()
+                ->arrayNode('ignore_routes')
+                    ->scalarPrototype()->end()
+                ->end()
             ->end()
         ;
 
