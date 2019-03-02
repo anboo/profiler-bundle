@@ -2,3 +2,12 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
+
+  Anboo\Profiler\Bundle\EventSubscriber\:
+    resource: '../../EventSubscriber'
+    tags: ['kernel.event_subscriber']
+
+  Anboo\Profiler\Bundle\EventSubscriber\CommandProfileSubscriber:
+    bind:
+      $ignoreCommandsRegex: '%anboo_profiler.ignore_commands%'
+    tags: ['kernel.event_subscriber']

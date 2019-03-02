@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Anboo\Profiler\Bundle\Debug\DebugAwareTrait;
 
 /**
- * WebslonSettingsExtension.
+ * AnbooProfilerExtension.
  */
 class AnbooProfilerExtension extends Extension
 {
@@ -18,11 +18,15 @@ class AnbooProfilerExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $container->setParameter('anboo_profiler.profile_command', $configs['profile_command']);
-        $container->setParameter('anboo_profiler.profile_controller', $configs['profile_controller']);
-        $container->setParameter('anboo_profiler.host', $configs['host']);
-        $container->setParameter('anboo_profiler.port', $configs['port']);
-        $container->setParameter('anboo_profiler.transport_handler', $configs['transport_handler']);
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('anboo_profiler.profile_command', $config['profile_command']);
+        $container->setParameter('anboo_profiler.profile_controller', $config['profile_controller']);
+        $container->setParameter('anboo_profiler.host', $config['host']);
+        $container->setParameter('anboo_profiler.port', $config['port']);
+        $container->setParameter('anboo_profiler.transport_handler', $config['transport_handler']);
+        $container->setParameter('anboo_profiler.ignore_commands', $config['ignore_commands']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
