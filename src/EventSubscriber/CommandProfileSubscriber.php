@@ -26,7 +26,9 @@ class CommandProfileSubscriber implements EventSubscriberInterface
      */
     private $logger;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private $ignoreCommandsRegex;
 
     /**
