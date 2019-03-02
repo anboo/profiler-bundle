@@ -8,6 +8,9 @@
     "name" : "Danil Andreev",
     "email" : "rusdteam@gmail.com"
   }],
+  "require": {
+    "anboo/profiler": "dev-master"
+  },
   "autoload": {
     "psr-4": {
       "Anboo\\Profiler\\Bundle\\": "src/"
